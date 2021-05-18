@@ -4,14 +4,22 @@ import { auth, db } from '../firebase'
 import Login from './login';
 import Loading from '../components/Loading';
 import { useEffect } from 'react';
+import firebase from 'firebase'
 
 function MyApp({ Component, pageProps }) {
   // get logged in user, if present will hold
   const [user, loading] = useAuthState(auth); 
 
   useEffect(() => {
-    console.log(loading);
-  }, [loading])
+    if (user) {
+      db.collection('users').doc(user.uid).set({
+        email: user.email,
+        lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+        photoURL: user.photoURL,
+        // if there is content, merge, else create
+      }, { merge: true })
+    }
+  }, [user])
 
   if (loading) return <Loading />
   if (!user) {
