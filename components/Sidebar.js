@@ -30,7 +30,10 @@ const Sidebar = () => {
     const chatExists = recipientEmail => {
         // return t/f to check whether there already is a chat with the provided email
         // !! converts truthy values to true and falsey to false
-        !!chatsSnapshot?.docs.find(chat => chat.data().users.find(user => user === recipientEmail)?.length > 0)
+        return chatsSnapshot?.docs.find(
+            (chat) => 
+                !!chat.data().users.find((user) => user === recipientEmail)?.length > 0
+        );
     }
 
     return (
