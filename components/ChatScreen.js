@@ -11,6 +11,7 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from '@material-ui/icons/Mic';
 import { useState } from "react";
 import Message from "./Message";
+import getRecipientEmail from '../utils/getRecipientEmail'
 
 export const ChatScreen = ({ chat, messages }) => {
     const [user] = useAuthState(auth);
@@ -30,6 +31,14 @@ export const ChatScreen = ({ chat, messages }) => {
                     }}
                 />
             ))
+        } else {
+            return JSON.parse(messages).map(message => (
+                <Message 
+                    key={message.id}
+                    user={message.user}
+                    message={message}
+                />
+            ));
         }
     }
 
@@ -45,14 +54,18 @@ export const ChatScreen = ({ chat, messages }) => {
             user: user.email,
             photoURL: user.photoURL
         })
+
+        setInput('');
     }
+
+    const recipientEmail = getRecipientEmail(chat.users, user);
 
     return (
         <Container>
             <Header>
                 <Avatar />
                 <HeaderInformation>
-                    <h3>Re Email</h3>
+                    <h3>{recipientEmail}</h3>
                     <p>Last seen...</p>
                 </HeaderInformation>
                 <HeaderIcons>
