@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { Avatar } from "@material-ui/core"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useCollection } from "react-firebase-hooks/firestore"
@@ -6,14 +7,18 @@ import { auth, db } from "../firebase"
 import getRecipientEmail from "../utils/getRecipientEmail"
 
 const Chat = ({ id, users }) => {
+    const router = useRouter();
     const [user] = useAuthState(auth);
     const recipientEmail = getRecipientEmail(users, user);
     const [recipientSnapshot] = useCollection(db.collection('users').where('email', '==', recipientEmail))
-
     const recipient = recipientSnapshot?.docs?.[0]?.data();
-    console.log(recipient);
+
+    const enterChat = () => {
+        router.push(`/chat/${id}`)
+    }
+
     return (
-        <Container>
+        <Container onClick={enterChat}>
             {recipient ? (
                 <UserAvatar src={recipient?.photoURL} />
             ) : (
