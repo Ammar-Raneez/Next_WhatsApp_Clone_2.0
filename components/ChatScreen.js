@@ -123,6 +123,7 @@ const Header = styled.div `
     background-color: #fff;
     z-index: 100;
     top: 0;
+    height: 5.8vw;
     display: flex;
     border-bottom: 1px solid whitesmoke;
     align-items: center;
@@ -157,7 +158,7 @@ const InputContainer = styled.form `
 `
 
 const EndOfMessage = styled.div `
-    /* margin-bottom: 30px; */
+    margin-bottom: 20px;
 `
 
 const HeaderInformation = styled.div `
