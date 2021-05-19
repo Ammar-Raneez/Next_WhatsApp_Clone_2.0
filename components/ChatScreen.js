@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const ChatScreen = () => {
+export const ChatScreen = ({ chat, messages }) => {
     return (
         <Container>
             
